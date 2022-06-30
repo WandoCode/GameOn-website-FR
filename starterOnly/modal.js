@@ -39,55 +39,74 @@ function closeModal() {
 function submitForm(e) {
   e.preventDefault();
 
-  let errors = [];
+  const validators = [
+    validateNames(reserveForm.first.value, reserveForm.first.name),
+    validateNames(reserveForm.last.value, reserveForm.last.name),
+    validateEmail(reserveForm.email.value, reserveForm.email.name),
+    validateQuantity(reserveForm.quantity.value, reserveForm.quantity.name),
+    validateLocation(reserveForm.location.value, reserveForm.location.name),
+    validateCheckbox1(
+      reserveForm.checkbox1.checked,
+      reserveForm.checkbox1.name
+    ),
+  ];
 
-  validateFirstName(reserveForm.first.value, errors);
-  validateLastName(reserveForm.last.value, errors);
-  validateEmail(reserveForm.email.value, errors);
-  validateQuantity(reserveForm.quantity.value, errors);
-  validateLocation(reserveForm.location.value, errors);
-  validateCheckbox1(reserveForm.checkbox1.checked, errors);
+  const errors = validators.filter((validationResult) => {
+    return validationResult !== undefined;
+  });
 
   if (errors.length == 0) {
-    // Continue (show vaidation msg)
+    // Continue (show validation msg)
     console.log("okay");
   }
   // Form not valid: stop submission
   else {
-    console.log(errors);
     showErrors(errors);
     return;
   }
 }
+// Display errors in the form
+function showErrors(errors) {
+  console.log(errors);
 
-function validateFirstName(value, errors) {
-  if (value.length < 2) errors.push("first");
+  return;
 }
 
-function validateLastName(value, errors) {
-  if (value.length < 2) errors.push("last");
+//  Validate form firstname input
+function validateNames(value, inputName) {
+  if (value.length < 2 || isEmpty(value)) return inputName;
 }
 
-function validateEmail(value, errors) {
+//  Validate form email input
+function validateEmail(value, inputName) {
   const reEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  if (!reEmail.test(value)) errors.push("email");
+  if (!reEmail.test(value) || isEmpty(value)) return inputName;
 }
 
-function validateQuantity(value, errors) {
-  if (isNaN(value) || value.length == 0) errors.push("quantity");
+//  Validate form quantity input
+function validateQuantity(value, inputName) {
+  // isNan() consider " " (empty string) as a 0. parseInt() will only transform number from a string.
+  if (isNaN(parseInt(value)) || isEmpty(value)) return inputName;
 }
 
-function validateLocation(value, errors) {
-  console.log(value);
-  if (value.length == 0) errors.push("location"); // TODO: Voir s'il faudrait pas des vérification supplémentaires
+//  Validate form location input
+function validateLocation(value, inputName) {
+  console.log(inputName); // TODO: location n'a pas de .name
+  if (isEmpty(value)) return inputName; // TODO: Voir s'il faudrait pas des vérification supplémentaires
 }
 
-function validateCheckbox1(isChecked, errors) {
-  if (!isChecked) errors.push("checkbox1");
+//  Validate form checkbox1 input
+function validateCheckbox1(isChecked, inputName) {
+  console.log(inputName);
+  if (!isChecked) return inputName;
 }
 
-function showErrors(errors) {
-  return;
+function isEmpty(valueStr) {
+  if (valueStr === "") return true;
+  if (valueStr === undefined) return true;
+  if (valueStr.length === 0) return true;
+
+  return false;
 }
