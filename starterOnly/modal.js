@@ -15,6 +15,8 @@ const closeBtn = document.querySelector(".close");
 const reserveForm = document.forms["reserve"];
 const modalSuccess = document.querySelector(".modal-success");
 const closeBtnSuccess = document.querySelector(".close-success");
+const formDatas = document.getElementsByClassName("formData");
+
 /* Events */
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -48,6 +50,9 @@ function closeModal() {
 // Submit form
 function submitForm(e) {
   e.preventDefault();
+
+  // Remove any error display
+  resetErrors();
 
   // Process validation
   const validators = [
@@ -103,6 +108,7 @@ function validateNames(value, inputName) {
 
 //  Validate form email input
 function validateEmail(value, inputName) {
+  //  Regular expression for an email adress
   const reEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -117,7 +123,7 @@ function validateQuantity(value, inputName) {
 
 //  Validate form location input
 function validateLocation(value, inputName) {
-  if (isEmpty(value)) return inputName; // TODO: Voir s'il faudrait pas des vérification supplémentaires
+  if (isEmpty(value)) return inputName; // TODO: Voir s'il faudrait pas des vérifications supplémentaires
 }
 
 //  Validate form checkbox1 input
@@ -125,6 +131,7 @@ function validateCheckbox1(isChecked, inputName) {
   if (!isChecked) return inputName;
 }
 
+// Check that the given string is empty
 function isEmpty(valueStr) {
   if (valueStr === "") return true;
   if (valueStr === undefined) return true;
@@ -133,6 +140,11 @@ function isEmpty(valueStr) {
   return false;
 }
 
-function resetForm() {
-  reserveForm;
+// Remove error display from the form
+function resetErrors() {
+  for (let i = 0; i < formDatas.length; i++) {
+    const formData = formDatas[i];
+    formData.removeAttribute("data-error-visible");
+    formData.removeAttribute("data-error");
+  }
 }
