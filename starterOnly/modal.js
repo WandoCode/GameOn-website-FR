@@ -11,17 +11,17 @@ const errorText = {
 /* DOM Elements */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const closeBtn = document.querySelector(".close");
 const reserveForm = document.forms["reserve"];
-
+const modalSuccess = document.querySelector(".modal-success");
+const closeBtnSuccess = document.querySelector(".close-success");
 /* Events */
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // Close modal event
 closeBtn.addEventListener("click", closeModal);
-
+closeBtnSuccess.addEventListener("click", closeModal);
 // Start form submission
 reserveForm.addEventListener("submit", submitForm);
 
@@ -49,7 +49,7 @@ function closeModal() {
 function submitForm(e) {
   e.preventDefault();
 
-  // Make validation
+  // Process validation
   const validators = [
     validateNames(reserveForm.first.value, reserveForm.first.name),
     validateNames(reserveForm.last.value, reserveForm.last.name),
@@ -80,7 +80,6 @@ function submitForm(e) {
 }
 // Display errors in the form
 function showErrors(errors) {
-  console.log(errors);
   errors.forEach((err) => {
     const errorInput = document.querySelector(`[name=${err}]`);
     const errorFormData = errorInput.parentNode;
@@ -93,6 +92,8 @@ function showErrors(errors) {
 // Display form success
 function showSuccess() {
   console.log("okay");
+  reserveForm.style.display = "none";
+  modalSuccess.style.display = "block";
 }
 
 //  Validate form firstname input
@@ -130,4 +131,8 @@ function isEmpty(valueStr) {
   if (valueStr.length === 0) return true;
 
   return false;
+}
+
+function resetForm() {
+  reserveForm;
 }
