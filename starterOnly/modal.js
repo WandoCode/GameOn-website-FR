@@ -71,7 +71,12 @@ function submitForm(e) {
 // Display errors in the form
 function showErrors(errors) {
   console.log(errors);
-
+  errors.forEach((err) => {
+    const errorInput = document.querySelector(`[name=${err}]`);
+    const errorFormData = errorInput.parentNode;
+    errorFormData.setAttribute("data-error-visible", "true");
+    errorFormData.setAttribute("data-error", `${err}`);
+  });
   return;
 }
 
