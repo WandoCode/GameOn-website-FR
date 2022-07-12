@@ -39,27 +39,30 @@ function closeModal() {
 function submitForm(e) {
   e.preventDefault();
 
+  // Make validation
   const validators = [
     validateNames(reserveForm.first.value, reserveForm.first.name),
     validateNames(reserveForm.last.value, reserveForm.last.name),
     validateEmail(reserveForm.email.value, reserveForm.email.name),
     validateQuantity(reserveForm.quantity.value, reserveForm.quantity.name),
-    validateLocation(reserveForm.location.value, reserveForm.location.name),
+    validateLocation(reserveForm.location.value, reserveForm.location[0].name),
     validateCheckbox1(
       reserveForm.checkbox1.checked,
       reserveForm.checkbox1.name
     ),
   ];
 
+  // Get errors from validation
   const errors = validators.filter((validationResult) => {
     return validationResult !== undefined;
   });
 
+  // Form valid: submit
   if (errors.length == 0) {
     // Continue (show validation msg)
-    console.log("okay");
+    showSuccess();
   }
-  // Form not valid: stop submission
+  // Form not valid: show errors on screen
   else {
     showErrors(errors);
     return;
@@ -70,6 +73,11 @@ function showErrors(errors) {
   console.log(errors);
 
   return;
+}
+
+// Display form success
+function showSuccess() {
+  console.log("okay");
 }
 
 //  Validate form firstname input
@@ -93,13 +101,11 @@ function validateQuantity(value, inputName) {
 
 //  Validate form location input
 function validateLocation(value, inputName) {
-  console.log(inputName); // TODO: location n'a pas de .name
   if (isEmpty(value)) return inputName; // TODO: Voir s'il faudrait pas des vérification supplémentaires
 }
 
 //  Validate form checkbox1 input
 function validateCheckbox1(isChecked, inputName) {
-  console.log(inputName);
   if (!isChecked) return inputName;
 }
 
