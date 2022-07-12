@@ -1,13 +1,14 @@
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
+/* Constant values */
+const errorText = {
+  first: "Champ obligatoire",
+  last: "Champ obligatoire",
+  email: "Nécessite une adresse mail valide",
+  quantity: "Champ obligatoire",
+  location: "Choix obligatoire",
+  checkbox1: "Vous devez accepter les conditions d'utilisation",
+};
 
-// DOM Elements
+/* DOM Elements */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
@@ -25,6 +26,15 @@ closeBtn.addEventListener("click", closeModal);
 reserveForm.addEventListener("submit", submitForm);
 
 /* Functions */
+function editNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
@@ -75,7 +85,7 @@ function showErrors(errors) {
     const errorInput = document.querySelector(`[name=${err}]`);
     const errorFormData = errorInput.parentNode;
     errorFormData.setAttribute("data-error-visible", "true");
-    errorFormData.setAttribute("data-error", `${err}`);
+    errorFormData.setAttribute("data-error", errorText[err]);
   });
   return;
 }
