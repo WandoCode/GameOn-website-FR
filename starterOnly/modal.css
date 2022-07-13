@@ -25,21 +25,11 @@ p {
   padding: 0.5vw;
 }
 
-.header-logo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.header-logo img {
-  width: 100%;
-}
-
 .topnav {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 30px;
-  overflow: hidden;
   margin: 3.5% 0 3.5% 3.5%;
 }
 
@@ -79,35 +69,40 @@ p {
 
 .topnav .icon {
   display: none;
+  color: #ff0000;
 }
 
 .main-navbar {
   display: flex;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
   .topnav a {
     display: none;
   }
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 768px) {
   .topnav.responsive {
     position: relative;
   }
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+
   .topnav.responsive a {
     float: none;
     display: block;
     text-align: left;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+    text-align: right;
+  }
+  .responsive .main-navbar {
+    position: absolute;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.082);
+    border-radius: 5px;
   }
 }
 
@@ -178,12 +173,10 @@ main {
 .bground {
   display: none;
   position: fixed;
-  z-index: 1;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
-  overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
 }
 
@@ -195,7 +188,6 @@ main {
   animation-duration: var(--modal-duration);
   background: #232323;
   border-radius: 10px;
-  overflow: hidden;
   position: relative;
   color: #fff;
   padding-top: 10px;
@@ -429,13 +421,13 @@ input {
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  overflow: hidden;
   box-shadow: 0 2px 7px 2px rgba(0, 0, 0, 0.2);
   margin-top: 30px;
   max-width: min(1240px, 90vw);
   max-height: 660px;
   margin-right: auto;
   margin-left: auto;
+  overflow: hidden;
 }
 .hero-content {
   padding: 51px 67px;
@@ -448,7 +440,7 @@ input {
 }
 .hero-content::after {
   content: "";
-  width: 100%;
+  width: min(500px, 50%);
   height: 100%;
   background: #232323;
   position: absolute;
