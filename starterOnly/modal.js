@@ -98,7 +98,7 @@ function showErrors(errors) {
 function showSuccess() {
   console.log("okay");
   reserveForm.style.display = "none";
-  modalSuccess.style.display = "block";
+  modalSuccess.style.display = "flex";
 }
 
 //  Validate form firstname input
