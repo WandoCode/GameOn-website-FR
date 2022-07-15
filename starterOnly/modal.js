@@ -5,6 +5,7 @@ const errorText = {
   email: "Nécessite une adresse mail valide",
   quantity: "Champ obligatoire",
   location: "Choix obligatoire",
+  birthdate: "Champ obligatoire",
   checkbox1: "Vous devez accepter les conditions d'utilisation",
 };
 
@@ -24,6 +25,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // Close modal event
 closeBtn.addEventListener("click", closeModal);
 closeBtnSuccess.addEventListener("click", closeModal);
+
 // Start form submission
 reserveForm.addEventListener("submit", submitForm);
 
@@ -37,7 +39,7 @@ function editNav() {
   }
 }
 
-// launch modal form
+// Launch modal form
 function launchModal() {
   modalbg.style.display = "block";
 }
@@ -59,6 +61,7 @@ function submitForm(e) {
     validateNames(reserveForm.first.value, reserveForm.first.name),
     validateNames(reserveForm.last.value, reserveForm.last.name),
     validateEmail(reserveForm.email.value, reserveForm.email.name),
+    validateDate(reserveForm.birthdate.value, reserveForm.birthdate.name),
     validateQuantity(reserveForm.quantity.value, reserveForm.quantity.name),
     validateLocation(reserveForm.location.value, reserveForm.location[0].name),
     validateCheckbox1(
@@ -87,7 +90,10 @@ function submitForm(e) {
 function showErrors(errors) {
   errors.forEach((err) => {
     const errorInput = document.querySelector(`[name=${err}]`);
+
     const errorFormData = errorInput.parentNode;
+
+    // Set an error description/style attached to the field
     errorFormData.setAttribute("data-error-visible", "true");
     errorFormData.setAttribute("data-error", errorText[err]);
   });
@@ -96,7 +102,6 @@ function showErrors(errors) {
 
 // Display form success
 function showSuccess() {
-  console.log("okay");
   reserveForm.style.display = "none";
   modalSuccess.style.display = "flex";
 }
@@ -123,7 +128,7 @@ function validateQuantity(value, inputName) {
 
 //  Validate form location input
 function validateLocation(value, inputName) {
-  if (isEmpty(value)) return inputName; // TODO: Voir s'il faudrait pas des vérifications supplémentaires
+  if (isEmpty(value)) return inputName;
 }
 
 //  Validate form checkbox1 input
@@ -131,6 +136,19 @@ function validateCheckbox1(isChecked, inputName) {
   if (!isChecked) return inputName;
 }
 
+function validateDate(value, inputName) {
+  if (isEmpty(value)) return inputName;
+
+  const valueDate = new Date(value);
+
+  // Basic time value from input
+  const timeInput = valueDate.getTime();
+
+  //Basic time value of today
+  const now = Date.now();
+
+  if (timeInput > now) return inputName;
+}
 // Check that the given string is empty
 function isEmpty(valueStr) {
   if (valueStr === "") return true;
