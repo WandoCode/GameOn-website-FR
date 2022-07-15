@@ -5,7 +5,7 @@ const errorText = {
   email: "Nécessite une adresse mail valide",
   quantity: "Champ obligatoire",
   location: "Choix obligatoire",
-  birthdate: "Champ obligatoire",
+  birthdate: "Date invalide",
   checkbox1: "Vous devez accepter les conditions d'utilisation",
 };
 
@@ -47,6 +47,8 @@ function launchModal() {
 // Close modal form
 function closeModal() {
   modalbg.style.display = "none";
+  resetForm();
+  hideSuccess();
 }
 
 // Submit form
@@ -106,6 +108,12 @@ function showSuccess() {
   modalSuccess.style.display = "flex";
 }
 
+// Hide success
+function hideSuccess() {
+  reserveForm.style.display = "block";
+  modalSuccess.style.display = "none";
+}
+
 //  Validate form firstname input
 function validateNames(value, inputName) {
   if (value.length < 2 || isEmpty(value)) return inputName;
@@ -136,15 +144,13 @@ function validateCheckbox1(isChecked, inputName) {
   if (!isChecked) return inputName;
 }
 
+//  Validate birthdate input
 function validateDate(value, inputName) {
   if (isEmpty(value)) return inputName;
-
+  // Check the given date is is the past
   const valueDate = new Date(value);
-
-  // Basic time value from input
   const timeInput = valueDate.getTime();
 
-  //Basic time value of today
   const now = Date.now();
 
   if (timeInput > now) return inputName;
@@ -165,4 +171,33 @@ function resetErrors() {
     formData.removeAttribute("data-error-visible");
     formData.removeAttribute("data-error");
   }
+}
+
+// Reset form state
+function resetForm() {
+  // Remove error messages
+  resetErrors();
+
+  // Remove inputs values
+  const formInputs = document.querySelectorAll("input");
+  formInputs.forEach((inputElement) => {
+    // Don't modify submit input value
+    if (inputElement.type === "submit") return;
+
+    // Reset radio button value
+    if (inputElement.type === "radio") {
+      inputElement.checked = false;
+      return;
+    }
+
+    // Reset checkbox value
+    if (inputElement.type === "checkbox") {
+      console.log(inputElement.name);
+      inputElement.checked = inputElement.name === "checkbox1" ? true : false;
+      return;
+    }
+
+    // Reset other value (number/text/email/date)
+    inputElement.value = "";
+  });
 }
