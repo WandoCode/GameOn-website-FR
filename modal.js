@@ -1,4 +1,4 @@
-/* Constant values */
+/* CONSTANT */
 const errorText = {
   first: "Veuillez entrer 2 caractères ou plus pour ce champ",
   last: "Veuillez entrer 2 caractères ou plus pour ce champ",
@@ -9,7 +9,7 @@ const errorText = {
   checkbox1: "Vous devez vérifier que vous acceptez les termes et conditions.",
 };
 
-/* DOM Elements */
+/* DOM ELEMENTS */
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeBtn = document.querySelector(".close");
@@ -18,8 +18,8 @@ const modalSuccess = document.querySelector(".modal-success");
 const closeBtnSuccess = document.querySelector(".close-success");
 const formDatas = document.getElementsByClassName("formData");
 
-/* Events */
-// launch modal event
+/* EVENTS */
+// Launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // Close modal event
@@ -29,7 +29,7 @@ closeBtnSuccess.addEventListener("click", closeModal);
 // Start form submission
 reserveForm.addEventListener("submit", submitForm);
 
-/* Functions */
+/* FUNCTIONS */
 // Toggle the opening/closing of the navbar for mobile
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -73,33 +73,34 @@ function submitForm(e) {
     ),
   ];
 
-  // Get errors from validation
+  // Gets errors from validation
   const errors = validators.filter((validationResult) => {
     return validationResult !== undefined;
   });
 
-  // Form valid: submit
+  // Form is valid: submit
   if (errors.length == 0) {
     // Continue (show validation msg)
     showSuccess();
   }
-  // Form not valid: show errors on screen
+  // Form is not valid: show errors on screen
   else {
     showErrors(errors);
     return;
   }
 }
+
 // Display errors in the form
 function showErrors(errors) {
   errors.forEach((err) => {
     const errorInput = document.querySelector(`[name=${err}]`);
-
     const errorFormData = errorInput.parentNode;
 
     // Set an error description/style attached to the field
     errorFormData.setAttribute("data-error-visible", "true");
     errorFormData.setAttribute("data-error", errorText[err]);
   });
+
   return;
 }
 
