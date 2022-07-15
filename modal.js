@@ -30,6 +30,7 @@ closeBtnSuccess.addEventListener("click", closeModal);
 reserveForm.addEventListener("submit", submitForm);
 
 /* Functions */
+// Toggle the opening/closing of the navbar for mobile
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -39,12 +40,12 @@ function editNav() {
   }
 }
 
-// Launch modal form
+// Launch modal
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-// Close modal form
+// Close modal
 function closeModal() {
   modalbg.style.display = "none";
   resetForm();
