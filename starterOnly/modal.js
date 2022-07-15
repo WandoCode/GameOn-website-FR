@@ -1,12 +1,12 @@
 /* Constant values */
 const errorText = {
-  first: "Champ obligatoire",
-  last: "Champ obligatoire",
-  email: "Nécessite une adresse mail valide",
-  quantity: "Champ obligatoire",
-  location: "Choix obligatoire",
-  birthdate: "Date invalide",
-  checkbox1: "Vous devez accepter les conditions d'utilisation",
+  first: "Veuillez entrer 2 caractères ou plus pour ce champ",
+  last: "Veuillez entrer 2 caractères ou plus pour ce champ",
+  email: "Nécessite une adresse mail valide.",
+  quantity: "Vous devez entre un nombre entre 0 et 99.",
+  location: "Vous devez choisir une option.",
+  birthdate: "Vous devez entrer votre date de naissance.",
+  checkbox1: "Vous devez vérifier que vous acceptez les termes et conditions.",
 };
 
 /* DOM Elements */
@@ -192,7 +192,6 @@ function resetForm() {
 
     // Reset checkbox value
     if (inputElement.type === "checkbox") {
-      console.log(inputElement.name);
       inputElement.checked = inputElement.name === "checkbox1" ? true : false;
       return;
     }
